@@ -37,8 +37,8 @@ func playFileAndBlock(file string) {
 
 func formatSeconds(second int64) string {
 	minutes := second / 60
-	secremaining := second % 60
-	return fmt.Sprintf("\r%d:%d", minutes, secremaining)
+	secRemaining := second % 60
+	return fmt.Sprintf("\r%d:%d", minutes, secRemaining)
 }
 
 func displayCountDown(timeinMinutes int64) {
@@ -48,6 +48,7 @@ func displayCountDown(timeinMinutes int64) {
 		time.Sleep(1 * time.Second)
 		timeInSeconds--
 	}
+	fmt.Println("\rDone!")
 }
 
 func main() {
@@ -61,9 +62,9 @@ func main() {
 		}
 
 	}
-	fmt.Printf("Starting countdown with %d minute\n", countdown)
-	playFileAndBlock("bell")
+	fmt.Printf("Starting pomodoro with %d minute\n", countdown)
 	go displayCountDown(countdown)
+	playFileAndBlock("bell")
 	time.Sleep(time.Duration(countdown) * time.Minute)
 	playFileAndBlock("ketchup")
 }
