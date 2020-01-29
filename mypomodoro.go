@@ -35,6 +35,21 @@ func playFileAndBlock(file string) {
 	<-done
 }
 
+func formatSeconds(second int64) string {
+	minutes := second / 60
+	secremaining := second % 60
+	return fmt.Sprintf("\r%d:%d", minutes, secremaining)
+}
+
+func displayCountDown(timeinMinutes int64) {
+	timeInSeconds := timeinMinutes * 60
+	for timeInSeconds > 0 {
+		fmt.Printf("%s", formatSeconds(timeInSeconds))
+		time.Sleep(1 * time.Second)
+		timeInSeconds--
+	}
+}
+
 func main() {
 	var countdown int64
 	countdown = 30
@@ -47,7 +62,8 @@ func main() {
 
 	}
 	fmt.Printf("Starting countdown with %d minute\n", countdown)
-	// donetimer := make(chan bool)
+	playFileAndBlock("bell")
+	go displayCountDown(countdown)
 	time.Sleep(time.Duration(countdown) * time.Minute)
 	playFileAndBlock("ketchup")
 }
